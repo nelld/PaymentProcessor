@@ -1119,6 +1119,10 @@ input[type="text"]::placeholder {
     .card-type-selector.three-options {
         grid-template-columns: 1fr;
     }
+    
+    .card-type-selector {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1135,7 +1139,10 @@ input[type="text"]::placeholder {
         width: 28px;
     }
 
-    .card-type-selector,
+    .card-type-selector {
+        grid-template-columns: 1fr 1fr;
+    }
+    
     .card-type-selector.three-options {
         grid-template-columns: 1fr;
     }
