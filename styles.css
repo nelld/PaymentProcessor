@@ -221,11 +221,19 @@ body {
 }
 
 .apple-pay {
-    color: #000;
+    background: #000;
+    color: #fff;
+    border-color: #000;
+}
+
+.apple-pay img,
+.apple-pay .payment-logo {
+    filter: brightness(0) invert(1);
 }
 
 .apple-pay:hover {
-    background: #f9fafb;
+    background: #1a1a1a;
+    border-color: #1a1a1a;
 }
 
 .google-pay {
