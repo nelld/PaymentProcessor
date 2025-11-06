@@ -1162,7 +1162,7 @@ input[type="text"]::placeholder {
     border: none;
     cursor: pointer;
     color: var(--text-secondary);
-    padding: 8px;
+    padding: 6px;
     border-radius: 8px;
     transition: all 0.2s ease;
     display: flex;
@@ -1173,6 +1173,11 @@ input[type="text"]::placeholder {
 .cvv-tooltip-close:hover {
     background: var(--background);
     color: var(--text-primary);
+}
+
+.cvv-tooltip-close:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 .cvv-tooltip-body {

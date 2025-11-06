@@ -307,34 +307,6 @@ function handleClickOutsideMenu(event) {
     }
 }
 
-// Set card as default
-function setAsDefault() {
-    closeCardOptionsMenu();
-    
-    if (!currentCardElement) return;
-    
-    // Remove default badge from all cards
-    document.querySelectorAll('.default-badge').forEach(badge => {
-        badge.remove();
-    });
-    
-    // Add default badge to selected card
-    const cardContent = currentCardElement.querySelector('.card-content');
-    const defaultBadge = document.createElement('div');
-    defaultBadge.className = 'card-badge default-badge';
-    defaultBadge.textContent = 'Default';
-    cardContent.appendChild(defaultBadge);
-    
-    // Select the radio button
-    const radio = currentCardElement.querySelector('input[type="radio"]');
-    if (radio) {
-        radio.checked = true;
-        handleCardSelection();
-    }
-    
-    showNotification('Card set as default payment method');
-}
-
 // Edit card (placeholder)
 function editCard() {
     closeCardOptionsMenu();
