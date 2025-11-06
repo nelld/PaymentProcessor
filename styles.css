@@ -8,6 +8,13 @@
     box-sizing: border-box;
 }
 
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
 :root {
     --primary-color: #007bff;
     --primary-hover: #0056b3;
@@ -278,18 +285,25 @@ body {
     margin-bottom: 12px;
 }
 
-.saved-card-item {
-    position: relative;
-    cursor: pointer;
+.saved-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.saved-card-item.hidden-card {
+.saved-card-wrapper.hidden-card {
     display: none;
 }
 
-.saved-card-item.hidden-card.show {
-    display: block;
+.saved-card-wrapper.hidden-card.show {
+    display: flex;
     animation: slideIn 0.3s ease;
+}
+
+.saved-card-item {
+    position: relative;
+    cursor: pointer;
 }
 
 @keyframes slideIn {
@@ -413,7 +427,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 6px;
-    padding: 8px 12px;
+    padding: 10px 12px;
     background: var(--background);
     border: 1px solid var(--border-color);
     border-radius: 8px;
@@ -445,6 +459,91 @@ body {
     display: none;
 }
 
+/* CVV Input Wrapper */
+.cvv-input-wrapper {
+    display: none;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin 0.3s ease;
+    margin-top: 0;
+}
+
+.cvv-input-wrapper.active {
+    display: block;
+    max-height: 150px;
+    opacity: 1;
+    margin-top: 12px;
+    animation: slideDown 0.3s ease;
+}
+
+.cvv-input-container {
+    padding: 4px 16px 14px;
+}
+
+.cvv-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.cvv-label svg {
+    flex-shrink: 0;
+    color: var(--primary-color);
+}
+
+.cvv-input-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cvv-input {
+    width: 140px;
+    padding: 10px 40px 10px 14px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: white;
+    transition: all 0.2s ease;
+    letter-spacing: 2px;
+}
+
+.cvv-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.cvv-input::placeholder {
+    letter-spacing: normal;
+    color: #cbd5e1;
+    font-weight: normal;
+}
+
+.cvv-info-btn {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.cvv-info-btn:hover {
+    color: var(--primary-color);
+}
+
 /* Add Card Button */
 .add-card-btn {
     width: 100%;
@@ -453,6 +552,7 @@ body {
     justify-content: center;
     gap: 6px;
     padding: 12px;
+	margin-top: 40px;
     background: white;
     border: 2px dashed var(--border-color);
     border-radius: 10px;
@@ -919,6 +1019,361 @@ input[type="text"]::placeholder {
     border-color: var(--text-primary);
 }
 
+/* Card Options Menu (Kebab Menu) */
+.card-options-menu {
+    position: fixed;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 6px;
+    min-width: 200px;
+    z-index: 1001;
+    display: none;
+    opacity: 0;
+    transform: scale(0.95) translateY(-5px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    border: 1px solid var(--border-color);
+}
+
+.card-options-menu.active {
+    display: block;
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+.card-option-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.card-option-item svg {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    transition: color 0.15s ease;
+}
+
+.card-option-item:hover {
+    background: var(--background);
+}
+
+.card-option-item:hover svg {
+    color: var(--text-primary);
+}
+
+.card-option-item.danger {
+    color: var(--danger-color);
+}
+
+.card-option-item.danger svg {
+    color: var(--danger-color);
+}
+
+.card-option-item.danger:hover {
+    background: #fef2f2;
+}
+
+.card-option-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 4px 0;
+}
+
+/* CVV Tooltip/Modal */
+.cvv-tooltip {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
+    backdrop-filter: blur(4px);
+    padding: 20px;
+}
+
+.cvv-tooltip.active {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.cvv-tooltip-content {
+    background: white;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: var(--shadow-xl);
+    animation: slideUpIn 0.3s ease;
+}
+
+@keyframes slideUpIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.cvv-tooltip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cvv-tooltip-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.cvv-tooltip-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    padding: 8px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cvv-tooltip-close:hover {
+    background: var(--background);
+    color: var(--text-primary);
+}
+
+.cvv-tooltip-body {
+    padding: 24px;
+}
+
+.cvv-card-example {
+    margin-bottom: 20px;
+}
+
+.cvv-example-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+}
+
+/* Card Back Visual (Visa, MC, Discover) */
+.card-back-visual {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 12px;
+}
+
+.card-magnetic-stripe {
+    position: absolute;
+    top: 30px;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: #2d3748;
+}
+
+.card-signature-panel {
+    position: absolute;
+    bottom: 50px;
+    left: 16px;
+    right: 16px;
+    height: 36px;
+    background: white;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 12px;
+}
+
+.cvv-highlight {
+    background: #fef3c7;
+    border: 2px dashed #f59e0b;
+    border-radius: 4px;
+    padding: 4px 8px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+.cvv-digits {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 16px;
+    color: #92400e;
+    letter-spacing: 2px;
+}
+
+.card-back-text {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+/* Card Front Visual (American Express) */
+.card-front-visual {
+    position: relative;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 12px;
+}
+
+.card-chip {
+    width: 40px;
+    height: 30px;
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    border-radius: 6px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-chip::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.1) 2px,
+        rgba(0, 0, 0, 0.1) 4px
+    );
+}
+
+.card-number-area {
+    margin: 30px 0 20px 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    letter-spacing: 2px;
+}
+
+.cvv-highlight-amex {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: #fef3c7;
+    border: 2px dashed #f59e0b;
+    border-radius: 4px;
+    padding: 6px 10px;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.cvv-digits-amex {
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    font-size: 15px;
+    color: #92400e;
+    letter-spacing: 2px;
+}
+
+.card-front-text {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+.cvv-description {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.cvv-description strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.cvv-divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 24px 0;
+}
+
+.cvv-security-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+    background: #f0fdf4;
+    border-radius: 8px;
+    border: 1px solid #d1fae5;
+    margin-top: 20px;
+}
+
+.cvv-security-note svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.cvv-security-note span {
+    font-size: 13px;
+    color: #166534;
+    line-height: 1.5;
+}
+
 /* Loading Overlay */
 .loading-overlay {
     position: fixed;
@@ -1076,6 +1531,53 @@ input[type="text"]::placeholder {
 
     .form-row {
         grid-template-columns: 1fr;
+    }
+
+    .cvv-input-container {
+        padding: 12px 14px;
+    }
+
+    .cvv-label {
+        font-size: 12px;
+    }
+
+    .cvv-input {
+        width: 120px;
+        font-size: 14px;
+    }
+
+    .card-options-menu {
+        min-width: 180px;
+    }
+
+    .card-option-item {
+        font-size: 13px;
+        padding: 9px 10px;
+    }
+
+    .cvv-tooltip {
+        padding: 12px;
+    }
+
+    .cvv-tooltip-header {
+        padding: 16px 20px;
+    }
+
+    .cvv-tooltip-header h3 {
+        font-size: 18px;
+    }
+
+    .cvv-tooltip-body {
+        padding: 20px;
+    }
+
+    .card-back-visual,
+    .card-front-visual {
+        height: 160px;
+    }
+
+    .cvv-description {
+        font-size: 13px;
     }
 
     .action-buttons {

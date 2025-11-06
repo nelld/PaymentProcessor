@@ -40,7 +40,7 @@ function detectCardType(number) {
         const icons = {
             visa: `<svg width="32" height="10" viewBox="0 0 32 10"><path fill="#1434CB" d="M13.3.4l-2.2 9.1h-2.2L11.1.4h2.2zm8.8 5.9l1.2-3.2.7 3.2h-1.9zm2.5 3.2h2l-1.8-9.1h-1.8c-.4 0-.8.2-.9.6l-3.2 8.5h2.3l.5-1.3h2.9v1.3zM9.6 3.8c0-.2.2-.3.6-.3.6 0 1.4.2 2 .5l.3-1.9c-.7-.2-1.4-.4-2.2-.4-2.3 0-3.9 1.2-3.9 2.9 0 1.3 1.1 2 2 2.4.9.5 1.2.8 1.2 1.2 0 .6-.7.9-1.4.9-.9 0-1.8-.2-2.6-.6l-.4 2c.6.3 1.6.5 2.7.5 2.5 0 4-1.2 4-3 0-2.3-3.3-2.4-3.3-3.4zM32 .4l-3.4 9.1h-2.3l1.7-4.5-1.5-4.1c-.1-.3-.4-.5-.8-.5h-3.9l-.1.3c.8.2 1.7.5 2.2.8.3.2.4.4.5.8L27.1 9.5h2.3L32 .4z"/></svg>`,
             mastercard: `<svg width="32" height="20" viewBox="0 0 32 20"><circle cx="11" cy="10" r="9" fill="#EB001B"/><circle cx="21" cy="10" r="9" fill="#F79E1B"/><path d="M16 4.686c1.434 1.342 2.333 3.25 2.333 5.364 0 2.114-.9 4.022-2.333 5.364A7.43 7.43 0 0 1 13.667 10c0-2.114.9-4.022 2.333-5.364z" fill="#FF5F00"/></svg>`,
-            amex: `<svg width="32" height="20" viewBox="0 0 32 20"><rect width="32" height="20" rx="2" fill="#006FCF"/><text x="16" y="14" text-anchor="middle" fill="white" font-size="8" font-weight="bold" font-family="Arial">AMEX</text></svg>`,
+            amex: `<svg width="32" height="20" viewBox="0 0 32 20"><rect width="32" height="20" rx="2" fill="#006FCF"/><text x="16" y="14" text-anchor="middle" fill="white" font-size="8" font-weight="bold" font-family="Inter, sans-serif">AMEX</text></svg>`,
             discover: `<svg width="32" height="20" viewBox="0 0 32 20"><rect width="32" height="20" rx="2" fill="#FF6000"/><circle cx="24" cy="10" r="8" fill="#FFA500"/></svg>`
         };
         
@@ -120,6 +120,45 @@ function formatCVV(input) {
     input.value = input.value.replace(/\D/g, '');
 }
 
+// Format CVV for saved cards with validation
+function formatSavedCardCVV(input) {
+    input.value = input.value.replace(/\D/g, '');
+    
+    // Visual feedback for CVV
+    if (input.value.length >= 3) {
+        input.style.borderColor = '#10b981';
+    } else {
+        input.style.borderColor = '';
+    }
+}
+
+// Handle card selection - show/hide CVV fields
+function handleCardSelection() {
+    const selectedCard = document.querySelector('input[name="payment-method"]:checked');
+    const allCVVWrappers = document.querySelectorAll('.cvv-input-wrapper');
+    
+    // Hide all CVV fields first
+    allCVVWrappers.forEach(wrapper => {
+        wrapper.classList.remove('active');
+    });
+    
+    // Show CVV field for selected card
+    if (selectedCard) {
+        const cardValue = selectedCard.value;
+        const cvvWrapper = document.getElementById(`cvv-${cardValue}`);
+        if (cvvWrapper) {
+            cvvWrapper.classList.add('active');
+            // Focus on CVV input after a short delay for animation
+            setTimeout(() => {
+                const cvvInput = cvvWrapper.querySelector('.cvv-input');
+                if (cvvInput) {
+                    cvvInput.focus();
+                }
+            }, 300);
+        }
+    }
+}
+
 // Toggle order summary (mobile)
 function toggleSummary() {
     const summary = document.querySelector('.order-summary');
@@ -128,7 +167,7 @@ function toggleSummary() {
 
 // Toggle show more cards
 function toggleShowMoreCards() {
-    const hiddenCards = document.querySelectorAll('.saved-card-item.hidden-card');
+    const hiddenCards = document.querySelectorAll('.saved-card-wrapper.hidden-card');
     const button = document.getElementById('showMoreCardsBtn');
     const buttonText = document.getElementById('showMoreText');
     const isExpanded = button.classList.contains('expanded');
@@ -180,18 +219,181 @@ function toggleNewCardForm() {
 
 // Show CVV info tooltip
 function showCVVInfo() {
-    alert('CVV is the 3-digit security code on the back of your card (4 digits for American Express on the front).');
+    const tooltip = document.getElementById('cvvInfoTooltip');
+    tooltip.classList.add('active');
+    // Prevent body scroll when tooltip is open
+    document.body.style.overflow = 'hidden';
 }
+
+// Close CVV info tooltip
+function closeCVVInfo() {
+    const tooltip = document.getElementById('cvvInfoTooltip');
+    tooltip.classList.remove('active');
+    // Restore body scroll
+    document.body.style.overflow = '';
+}
+
+// Close tooltip when clicking outside
+document.addEventListener('click', (e) => {
+    const tooltip = document.getElementById('cvvInfoTooltip');
+    if (tooltip && tooltip.classList.contains('active')) {
+        if (e.target === tooltip) {
+            closeCVVInfo();
+        }
+    }
+});
+
+// Global variable to track current card being acted upon
+let currentCardElement = null;
 
 // Show card options menu
 function showCardOptions(event) {
     event.preventDefault();
     event.stopPropagation();
     
-    const options = confirm('Card Options:\n\n1. Set as default\n2. Remove card\n\nSelect OK to set as default, Cancel to dismiss');
+    const menu = document.getElementById('cardOptionsMenu');
+    const button = event.currentTarget;
     
-    if (options) {
-        showNotification('Card set as default payment method');
+    // Store the card wrapper element for later use
+    currentCardElement = button.closest('.saved-card-wrapper');
+    
+    // Close menu if already open
+    if (menu.classList.contains('active')) {
+        closeCardOptionsMenu();
+        return;
+    }
+    
+    // Position the menu relative to the button
+    const buttonRect = button.getBoundingClientRect();
+    const menuWidth = 200; // Approximate menu width
+    
+    // Position to the left of the button by default
+    let left = buttonRect.left - menuWidth + 10;
+    let top = buttonRect.bottom + 5;
+    
+    // If menu would go off left edge of screen, show on right side
+    if (left < 10) {
+        left = buttonRect.right - 10;
+    }
+    
+    // If menu would go off bottom of viewport, show above button
+    if (top + 200 > window.innerHeight) {
+        top = buttonRect.top - 180;
+    }
+    
+    menu.style.left = `${left}px`;
+    menu.style.top = `${top}px`;
+    menu.classList.add('active');
+    
+    // Add click outside listener
+    setTimeout(() => {
+        document.addEventListener('click', handleClickOutsideMenu);
+    }, 0);
+}
+
+// Close card options menu
+function closeCardOptionsMenu() {
+    const menu = document.getElementById('cardOptionsMenu');
+    menu.classList.remove('active');
+    document.removeEventListener('click', handleClickOutsideMenu);
+    currentCardElement = null;
+}
+
+// Handle click outside menu
+function handleClickOutsideMenu(event) {
+    const menu = document.getElementById('cardOptionsMenu');
+    if (!menu.contains(event.target)) {
+        closeCardOptionsMenu();
+    }
+}
+
+// Set card as default
+function setAsDefault() {
+    closeCardOptionsMenu();
+    
+    if (!currentCardElement) return;
+    
+    // Remove default badge from all cards
+    document.querySelectorAll('.default-badge').forEach(badge => {
+        badge.remove();
+    });
+    
+    // Add default badge to selected card
+    const cardContent = currentCardElement.querySelector('.card-content');
+    const defaultBadge = document.createElement('div');
+    defaultBadge.className = 'card-badge default-badge';
+    defaultBadge.textContent = 'Default';
+    cardContent.appendChild(defaultBadge);
+    
+    // Select the radio button
+    const radio = currentCardElement.querySelector('input[type="radio"]');
+    if (radio) {
+        radio.checked = true;
+        handleCardSelection();
+    }
+    
+    showNotification('Card set as default payment method');
+}
+
+// Edit card (placeholder)
+function editCard() {
+    closeCardOptionsMenu();
+    
+    if (!currentCardElement) return;
+    
+    const cardNumber = currentCardElement.querySelector('.card-number')?.textContent || '';
+    showNotification(`Edit functionality for ${cardNumber} - Coming soon`);
+    
+    // In production, this would open an edit modal or form
+}
+
+// Remove card
+function removeCard() {
+    closeCardOptionsMenu();
+    
+    if (!currentCardElement) return;
+    
+    const cardNumber = currentCardElement.querySelector('.card-number')?.textContent || '';
+    
+    const confirmed = confirm(`Are you sure you want to remove card ${cardNumber}?\n\nThis action cannot be undone.`);
+    
+    if (confirmed) {
+        // Check if this was the selected card
+        const radio = currentCardElement.querySelector('input[type="radio"]');
+        const wasSelected = radio?.checked;
+        
+        // Remove the card with animation
+        currentCardElement.style.opacity = '0';
+        currentCardElement.style.transform = 'translateX(-20px)';
+        
+        setTimeout(() => {
+            currentCardElement.remove();
+            
+            // If removed card was selected, select the first available card
+            if (wasSelected) {
+                const firstCard = document.querySelector('.saved-card-wrapper input[type="radio"]');
+                if (firstCard) {
+                    firstCard.checked = true;
+                    handleCardSelection();
+                }
+            }
+            
+            // Update the "Show all cards" button count
+            const hiddenCards = document.querySelectorAll('.saved-card-wrapper.hidden-card');
+            const showMoreBtn = document.getElementById('showMoreCardsBtn');
+            const buttonText = document.getElementById('showMoreText');
+            
+            if (hiddenCards.length === 0 && showMoreBtn) {
+                showMoreBtn.style.display = 'none';
+            } else if (buttonText) {
+                const visibleHiddenCards = Array.from(hiddenCards).filter(card => !card.classList.contains('show'));
+                if (visibleHiddenCards.length > 0) {
+                    buttonText.textContent = `Show all cards (${visibleHiddenCards.length})`;
+                }
+            }
+            
+            showNotification('Card removed successfully');
+        }, 300);
     }
 }
 
@@ -285,6 +487,27 @@ function processPayment() {
     } else if (!selectedCard) {
         alert('Please select a payment method');
         return;
+    } else {
+        // Validate CVV for saved card
+        const cardValue = selectedCard.value;
+        const cvvInput = document.getElementById(`cvv-input-${cardValue.split('-')[1]}`);
+        
+        if (!cvvInput || !cvvInput.value) {
+            alert('Please enter the security code (CVV) for your card');
+            if (cvvInput) {
+                cvvInput.focus();
+            }
+            return;
+        }
+        
+        const cvvLength = cvvInput.value.length;
+        const minCvvLength = cvvInput.maxLength === '4' ? 4 : 3;
+        
+        if (cvvLength < minCvvLength) {
+            alert(`Please enter a valid ${minCvvLength}-digit security code`);
+            cvvInput.focus();
+            return;
+        }
     }
     
     processPaymentWithAnimation();
@@ -386,7 +609,7 @@ document.head.appendChild(style);
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
     // Check if there are hidden cards
-    const hiddenCards = document.querySelectorAll('.saved-card-item.hidden-card');
+    const hiddenCards = document.querySelectorAll('.saved-card-wrapper.hidden-card');
     const showMoreBtn = document.getElementById('showMoreCardsBtn');
     
     // Hide show more button if no hidden cards (only default card exists)

@@ -75,132 +75,318 @@
             <section class="saved-cards-section">
                 <h2 class="section-title">Saved Payment Methods</h2>
                 <div class="saved-cards-list">
-                    <label class="saved-card-item">
-                        <input type="radio" name="payment-method" value="card-1" checked>
-                        <div class="card-content">
-                            <div class="card-info">
-                                <div class="card-brand visa">
-                                    <img src="images/visa.png" alt="Visa" class="card-logo">
+                    <div class="saved-card-wrapper">
+                        <label class="saved-card-item">
+                            <input type="radio" name="payment-method" value="card-1" checked onchange="handleCardSelection()">
+                            <div class="card-content">
+                                <div class="card-info">
+                                    <div class="card-brand visa">
+                                        <img src="images/visa.png" alt="Visa" class="card-logo">
+                                    </div>
+                                    <div class="card-details">
+                                        <span class="card-number">•••• 4242</span>
+                                        <span class="card-expiry">Exp: 12/25</span>
+                                    </div>
                                 </div>
-                                <div class="card-details">
-                                    <span class="card-number">•••• 4242</span>
-                                    <span class="card-expiry">Exp: 12/25</span>
+                                <div class="card-badge default-badge">Default</div>
+                            </div>
+                        </label>
+                        <div class="cvv-input-wrapper active" id="cvv-card-1">
+                            <div class="cvv-input-container">
+                                <label for="cvv-input-1" class="cvv-label">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        <path d="M8 11V8M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                    For your security, please enter the CVV
+                                </label>
+                                <div class="cvv-input-field">
+                                    <input 
+                                        type="text" 
+                                        id="cvv-input-1" 
+                                        placeholder="123"
+                                        maxlength="3"
+                                        oninput="formatSavedCardCVV(this)"
+                                        class="cvv-input"
+                                        autocomplete="off"
+                                        required
+                                    >
+                                    <button type="button" class="cvv-info-btn" onclick="showCVVInfo()">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M8 7V12M8 5V5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
-                            <div class="card-badge default-badge">Default</div>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="saved-card-item hidden-card">
-                        <input type="radio" name="payment-method" value="card-2">
-                        <div class="card-content">
-                            <div class="card-info">
-                                <div class="card-brand mastercard">
-                                    <img src="images/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
+                    <div class="saved-card-wrapper hidden-card">
+                        <label class="saved-card-item">
+                            <input type="radio" name="payment-method" value="card-2" onchange="handleCardSelection()">
+                            <div class="card-content">
+                                <div class="card-info">
+                                    <div class="card-brand mastercard">
+                                        <img src="images/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
+                                    </div>
+                                    <div class="card-details">
+                                        <span class="card-number">•••• 5555</span>
+                                        <span class="card-expiry">Exp: 09/26</span>
+                                    </div>
                                 </div>
-                                <div class="card-details">
-                                    <span class="card-number">•••• 5555</span>
-                                    <span class="card-expiry">Exp: 09/26</span>
+                                <button class="card-options-btn" onclick="showCardOptions(event)">
+                                    <svg width="16" height="16" viewBox="0 0 16 16">
+                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </label>
+                        <div class="cvv-input-wrapper" id="cvv-card-2">
+                            <div class="cvv-input-container">
+                                <label for="cvv-input-2" class="cvv-label">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        <path d="M8 11V8M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                    For your security, please enter the CVV
+                                </label>
+                                <div class="cvv-input-field">
+                                    <input 
+                                        type="text" 
+                                        id="cvv-input-2" 
+                                        placeholder="123"
+                                        maxlength="3"
+                                        oninput="formatSavedCardCVV(this)"
+                                        class="cvv-input"
+                                        autocomplete="off"
+                                        required
+                                    >
+                                    <button type="button" class="cvv-info-btn" onclick="showCVVInfo()">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M8 7V12M8 5V5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
-                            <button class="card-options-btn" onclick="showCardOptions(event)">
-                                <svg width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                </svg>
-                            </button>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="saved-card-item hidden-card">
-                        <input type="radio" name="payment-method" value="card-3">
-                        <div class="card-content">
-                            <div class="card-info">
-                                <div class="card-brand amex">
-                                    <img src="images/American_Express_logo_(2018).svg.png" alt="American Express" class="card-logo">
+                    <div class="saved-card-wrapper hidden-card">
+                        <label class="saved-card-item">
+                            <input type="radio" name="payment-method" value="card-3" onchange="handleCardSelection()">
+                            <div class="card-content">
+                                <div class="card-info">
+                                    <div class="card-brand amex">
+                                        <img src="images/American_Express_logo_(2018).svg.png" alt="American Express" class="card-logo">
+                                    </div>
+                                    <div class="card-details">
+                                        <span class="card-number">•••• 1005</span>
+                                        <span class="card-expiry">Exp: 03/27</span>
+                                    </div>
                                 </div>
-                                <div class="card-details">
-                                    <span class="card-number">•••• 1005</span>
-                                    <span class="card-expiry">Exp: 03/27</span>
+                                <button class="card-options-btn" onclick="showCardOptions(event)">
+                                    <svg width="16" height="16" viewBox="0 0 16 16">
+                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </label>
+                        <div class="cvv-input-wrapper" id="cvv-card-3">
+                            <div class="cvv-input-container">
+                                <label for="cvv-input-3" class="cvv-label">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        <path d="M8 11V8M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                    For your security, please enter the CVV
+                                </label>
+                                <div class="cvv-input-field">
+                                    <input 
+                                        type="text" 
+                                        id="cvv-input-3" 
+                                        placeholder="1234"
+                                        maxlength="4"
+                                        oninput="formatSavedCardCVV(this)"
+                                        class="cvv-input"
+                                        autocomplete="off"
+                                        required
+                                    >
+                                    <button type="button" class="cvv-info-btn" onclick="showCVVInfo()">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M8 7V12M8 5V5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
-                            <button class="card-options-btn" onclick="showCardOptions(event)">
-                                <svg width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                </svg>
-                            </button>
                         </div>
-                    </label>
+                    </div>
 
                     <!-- Additional cards (hidden by default) -->
-                    <label class="saved-card-item hidden-card">
-                        <input type="radio" name="payment-method" value="card-4">
-                        <div class="card-content">
-                            <div class="card-info">
-                                <div class="card-brand visa">
-                                    <img src="images/visa.png" alt="Visa" class="card-logo">
+                    <div class="saved-card-wrapper hidden-card">
+                        <label class="saved-card-item">
+                            <input type="radio" name="payment-method" value="card-4" onchange="handleCardSelection()">
+                            <div class="card-content">
+                                <div class="card-info">
+                                    <div class="card-brand visa">
+                                        <img src="images/visa.png" alt="Visa" class="card-logo">
+                                    </div>
+                                    <div class="card-details">
+                                        <span class="card-number">•••• 8888</span>
+                                        <span class="card-expiry">Exp: 06/26</span>
+                                    </div>
                                 </div>
-                                <div class="card-details">
-                                    <span class="card-number">•••• 8888</span>
-                                    <span class="card-expiry">Exp: 06/26</span>
+                                <button class="card-options-btn" onclick="showCardOptions(event)">
+                                    <svg width="16" height="16" viewBox="0 0 16 16">
+                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </label>
+                        <div class="cvv-input-wrapper" id="cvv-card-4">
+                            <div class="cvv-input-container">
+                                <label for="cvv-input-4" class="cvv-label">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        <path d="M8 11V8M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                    For your security, please enter the CVV
+                                </label>
+                                <div class="cvv-input-field">
+                                    <input 
+                                        type="text" 
+                                        id="cvv-input-4" 
+                                        placeholder="123"
+                                        maxlength="3"
+                                        oninput="formatSavedCardCVV(this)"
+                                        class="cvv-input"
+                                        autocomplete="off"
+                                        required
+                                    >
+                                    <button type="button" class="cvv-info-btn" onclick="showCVVInfo()">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M8 7V12M8 5V5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
-                            <button class="card-options-btn" onclick="showCardOptions(event)">
-                                <svg width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                </svg>
-                            </button>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="saved-card-item hidden-card">
-                        <input type="radio" name="payment-method" value="card-5">
-                        <div class="card-content">
-                            <div class="card-info">
-                                <div class="card-brand mastercard">
-                                    <img src="images/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
+                    <div class="saved-card-wrapper hidden-card">
+                        <label class="saved-card-item">
+                            <input type="radio" name="payment-method" value="card-5" onchange="handleCardSelection()">
+                            <div class="card-content">
+                                <div class="card-info">
+                                    <div class="card-brand mastercard">
+                                        <img src="images/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
+                                    </div>
+                                    <div class="card-details">
+                                        <span class="card-number">•••• 3333</span>
+                                        <span class="card-expiry">Exp: 11/25</span>
+                                    </div>
                                 </div>
-                                <div class="card-details">
-                                    <span class="card-number">•••• 3333</span>
-                                    <span class="card-expiry">Exp: 11/25</span>
+                                <button class="card-options-btn" onclick="showCardOptions(event)">
+                                    <svg width="16" height="16" viewBox="0 0 16 16">
+                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </label>
+                        <div class="cvv-input-wrapper" id="cvv-card-5">
+                            <div class="cvv-input-container">
+                                <label for="cvv-input-5" class="cvv-label">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        <path d="M8 11V8M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                    For your security, please enter the CVV
+                                </label>
+                                <div class="cvv-input-field">
+                                    <input 
+                                        type="text" 
+                                        id="cvv-input-5" 
+                                        placeholder="123"
+                                        maxlength="3"
+                                        oninput="formatSavedCardCVV(this)"
+                                        class="cvv-input"
+                                        autocomplete="off"
+                                        required
+                                    >
+                                    <button type="button" class="cvv-info-btn" onclick="showCVVInfo()">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M8 7V12M8 5V5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
-                            <button class="card-options-btn" onclick="showCardOptions(event)">
-                                <svg width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                </svg>
-                            </button>
                         </div>
-                    </label>
+                    </div>
 
-                    <label class="saved-card-item hidden-card">
-                        <input type="radio" name="payment-method" value="card-6">
-                        <div class="card-content">
-                            <div class="card-info">
-                                <div class="card-brand visa">
-                                    <img src="images/visa.png" alt="Visa" class="card-logo">
+                    <div class="saved-card-wrapper hidden-card">
+                        <label class="saved-card-item">
+                            <input type="radio" name="payment-method" value="card-6" onchange="handleCardSelection()">
+                            <div class="card-content">
+                                <div class="card-info">
+                                    <div class="card-brand visa">
+                                        <img src="images/visa.png" alt="Visa" class="card-logo">
+                                    </div>
+                                    <div class="card-details">
+                                        <span class="card-number">•••• 7777</span>
+                                        <span class="card-expiry">Exp: 08/27</span>
+                                    </div>
                                 </div>
-                                <div class="card-details">
-                                    <span class="card-number">•••• 7777</span>
-                                    <span class="card-expiry">Exp: 08/27</span>
+                                <button class="card-options-btn" onclick="showCardOptions(event)">
+                                    <svg width="16" height="16" viewBox="0 0 16 16">
+                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </label>
+                        <div class="cvv-input-wrapper" id="cvv-card-6">
+                            <div class="cvv-input-container">
+                                <label for="cvv-input-6" class="cvv-label">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M8 1C4.134 1 1 4.134 1 8s3.134 7 7 7 7-3.134 7-7-3.134-7-7-7z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        <path d="M8 11V8M8 5v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                    For your security, please enter the CVV
+                                </label>
+                                <div class="cvv-input-field">
+                                    <input 
+                                        type="text" 
+                                        id="cvv-input-6" 
+                                        placeholder="123"
+                                        maxlength="3"
+                                        oninput="formatSavedCardCVV(this)"
+                                        class="cvv-input"
+                                        autocomplete="off"
+                                        required
+                                    >
+                                    <button type="button" class="cvv-info-btn" onclick="showCVVInfo()">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                            <path d="M8 7V12M8 5V5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
                                 </div>
                             </div>
-                            <button class="card-options-btn" onclick="showCardOptions(event)">
-                                <svg width="16" height="16" viewBox="0 0 16 16">
-                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                </svg>
-                            </button>
                         </div>
-                    </label>
+                    </div>
                 </div>
 
                 <button class="show-more-cards-btn" id="showMoreCardsBtn" onclick="toggleShowMoreCards()">
@@ -390,6 +576,87 @@
                         <path d="M5 10H15M15 10L11 6M15 10L11 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Options Menu -->
+    <div id="cardOptionsMenu" class="card-options-menu">
+        <button class="card-option-item" onclick="setAsDefault()">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M9 1L11.5 6.5L17.5 7.5L13.25 11.5L14.5 17.5L9 14.5L3.5 17.5L4.75 11.5L0.5 7.5L6.5 6.5L9 1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+            <span>Set as default</span>
+        </button>
+        <button class="card-option-item" onclick="editCard()">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M8 3H3C2.44772 3 2 3.44772 2 4V15C2 15.5523 2.44772 16 3 16H14C14.5523 16 15 15.5523 15 15V10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M11 2L16 7L9 14H6V11L13 4L11 2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+            <span>Edit card</span>
+        </button>
+        <div class="card-option-divider"></div>
+        <button class="card-option-item danger" onclick="removeCard()">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path d="M3 5H15M7 8V13M11 8V13M4 5L5 15C5 15.5523 5.44772 16 6 16H12C12.5523 16 13 15.5523 13 15L14 5M7 5V3C7 2.44772 7.44772 2 8 2H10C10.5523 2 11 2.44772 11 3V5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Remove card</span>
+        </button>
+    </div>
+
+    <!-- CVV Info Tooltip -->
+    <div id="cvvInfoTooltip" class="cvv-tooltip">
+        <div class="cvv-tooltip-content">
+            <div class="cvv-tooltip-header">
+                <h3>Where to find your CVV</h3>
+                <button class="cvv-tooltip-close" onclick="closeCVVInfo()">
+                    <svg width="20" height="20" viewBox="0 0 20 20">
+                        <path d="M5 5L15 15M5 15L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="cvv-tooltip-body">
+                <!-- Visa/Mastercard/Discover -->
+                <div class="cvv-card-example">
+                    <div class="cvv-example-label">Visa, Mastercard, Discover</div>
+                    <div class="card-back-visual">
+                        <div class="card-magnetic-stripe"></div>
+                        <div class="card-signature-panel">
+                            <div class="cvv-highlight">
+                                <span class="cvv-digits">123</span>
+                            </div>
+                        </div>
+                        <div class="card-back-text">Look on the back of your card</div>
+                    </div>
+                    <p class="cvv-description">The CVV is a <strong>3-digit</strong> security code on the back of your card, usually in the signature area.</p>
+                </div>
+
+                <div class="cvv-divider"></div>
+
+                <!-- American Express -->
+                <div class="cvv-card-example">
+                    <div class="cvv-example-label">American Express</div>
+                    <div class="card-front-visual">
+                        <div class="card-chip"></div>
+                        <div class="card-number-area">
+                            <span class="card-dots">•••• •••••• •••••</span>
+                        </div>
+                        <div class="cvv-highlight-amex">
+                            <span class="cvv-digits-amex">1234</span>
+                        </div>
+                        <div class="card-front-text">Look on the front of your card</div>
+                    </div>
+                    <p class="cvv-description">For Amex, the CVV is a <strong>4-digit</strong> security code on the front of your card, above the card number.</p>
+                </div>
+
+                <div class="cvv-security-note">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 0L2 3V7C2 10.866 5.134 14 8 14C10.866 14 14 10.866 14 7V3L8 0Z" fill="#10B981"/>
+                        <path d="M6.5 8L7.5 9L10 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Your CVV helps verify that you have physical possession of the card.</span>
+                </div>
             </div>
         </div>
     </div>
