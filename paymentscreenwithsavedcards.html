@@ -76,18 +76,18 @@
                 <h2 class="section-title">Saved Payment Methods</h2>
                 <div class="saved-cards-list">
                     <div class="saved-card-wrapper">
-                        <label class="saved-card-item">
+                    <label class="saved-card-item">
                             <input type="radio" name="payment-method" value="card-1" checked onchange="handleCardSelection()">
-                            <div class="card-content">
-                                <div class="card-info">
-                                    <div class="card-brand visa">
-                                        <img src="images/visa.png" alt="Visa" class="card-logo">
-                                    </div>
-                                    <div class="card-details">
-                                        <span class="card-number">•••• 4242</span>
-                                        <span class="card-expiry">Exp: 12/25</span>
-                                    </div>
+                        <div class="card-content">
+                            <div class="card-info">
+                                <div class="card-brand visa">
+                                    <img src="images/visa.png" alt="Visa" class="card-logo">
                                 </div>
+                                <div class="card-details">
+                                    <span class="card-number">•••• 4242</span>
+                                    <span class="card-expiry">Exp: 12/25</span>
+                                </div>
+                            </div>
                                 <button class="card-options-btn" onclick="showCardOptions(event)">
                                     <svg width="16" height="16" viewBox="0 0 16 16">
                                         <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
@@ -131,25 +131,25 @@
                     <div class="saved-card-wrapper hidden-card">
                         <label class="saved-card-item">
                             <input type="radio" name="payment-method" value="card-2" onchange="handleCardSelection()">
-                            <div class="card-content">
-                                <div class="card-info">
-                                    <div class="card-brand mastercard">
-                                        <img src="images/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
-                                    </div>
-                                    <div class="card-details">
-                                        <span class="card-number">•••• 5555</span>
-                                        <span class="card-expiry">Exp: 09/26</span>
-                                    </div>
+                        <div class="card-content">
+                            <div class="card-info">
+                                <div class="card-brand mastercard">
+                                    <img src="images/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
                                 </div>
-                                <button class="card-options-btn" onclick="showCardOptions(event)">
-                                    <svg width="16" height="16" viewBox="0 0 16 16">
-                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                    </svg>
-                                </button>
+                                <div class="card-details">
+                                    <span class="card-number">•••• 5555</span>
+                                    <span class="card-expiry">Exp: 09/26</span>
+                                </div>
                             </div>
-                        </label>
+                            <button class="card-options-btn" onclick="showCardOptions(event)">
+                                <svg width="16" height="16" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </label>
                         <div class="cvv-input-wrapper" id="cvv-card-2">
                             <div class="cvv-input-container">
                                 <label for="cvv-input-2" class="cvv-label">
@@ -184,25 +184,25 @@
                     <div class="saved-card-wrapper hidden-card">
                         <label class="saved-card-item">
                             <input type="radio" name="payment-method" value="card-3" onchange="handleCardSelection()">
-                            <div class="card-content">
-                                <div class="card-info">
-                                    <div class="card-brand amex">
-                                        <img src="images/American_Express_logo_(2018).svg.png" alt="American Express" class="card-logo">
-                                    </div>
-                                    <div class="card-details">
-                                        <span class="card-number">•••• 1005</span>
-                                        <span class="card-expiry">Exp: 03/27</span>
-                                    </div>
+                        <div class="card-content">
+                            <div class="card-info">
+                                <div class="card-brand amex">
+                                    <img src="images/American_Express_logo_(2018).svg.png" alt="American Express" class="card-logo">
                                 </div>
-                                <button class="card-options-btn" onclick="showCardOptions(event)">
-                                    <svg width="16" height="16" viewBox="0 0 16 16">
-                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                    </svg>
-                                </button>
+                                <div class="card-details">
+                                    <span class="card-number">•••• 1005</span>
+                                    <span class="card-expiry">Exp: 03/27</span>
+                                </div>
                             </div>
-                        </label>
+                            <button class="card-options-btn" onclick="showCardOptions(event)">
+                                <svg width="16" height="16" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </label>
                         <div class="cvv-input-wrapper" id="cvv-card-3">
                             <div class="cvv-input-container">
                                 <label for="cvv-input-3" class="cvv-label">
@@ -238,25 +238,25 @@
                     <div class="saved-card-wrapper hidden-card">
                         <label class="saved-card-item">
                             <input type="radio" name="payment-method" value="card-4" onchange="handleCardSelection()">
-                            <div class="card-content">
-                                <div class="card-info">
-                                    <div class="card-brand visa">
-                                        <img src="images/visa.png" alt="Visa" class="card-logo">
-                                    </div>
-                                    <div class="card-details">
-                                        <span class="card-number">•••• 8888</span>
-                                        <span class="card-expiry">Exp: 06/26</span>
-                                    </div>
+                        <div class="card-content">
+                            <div class="card-info">
+                                <div class="card-brand visa">
+                                    <img src="images/visa.png" alt="Visa" class="card-logo">
                                 </div>
-                                <button class="card-options-btn" onclick="showCardOptions(event)">
-                                    <svg width="16" height="16" viewBox="0 0 16 16">
-                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                    </svg>
-                                </button>
+                                <div class="card-details">
+                                    <span class="card-number">•••• 8888</span>
+                                    <span class="card-expiry">Exp: 06/26</span>
+                                </div>
                             </div>
-                        </label>
+                            <button class="card-options-btn" onclick="showCardOptions(event)">
+                                <svg width="16" height="16" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </label>
                         <div class="cvv-input-wrapper" id="cvv-card-4">
                             <div class="cvv-input-container">
                                 <label for="cvv-input-4" class="cvv-label">
@@ -291,25 +291,25 @@
                     <div class="saved-card-wrapper hidden-card">
                         <label class="saved-card-item">
                             <input type="radio" name="payment-method" value="card-5" onchange="handleCardSelection()">
-                            <div class="card-content">
-                                <div class="card-info">
-                                    <div class="card-brand mastercard">
-                                        <img src="images/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
-                                    </div>
-                                    <div class="card-details">
-                                        <span class="card-number">•••• 3333</span>
-                                        <span class="card-expiry">Exp: 11/25</span>
-                                    </div>
+                        <div class="card-content">
+                            <div class="card-info">
+                                <div class="card-brand mastercard">
+                                    <img src="images/Mastercard-logo.svg" alt="Mastercard" class="card-logo">
                                 </div>
-                                <button class="card-options-btn" onclick="showCardOptions(event)">
-                                    <svg width="16" height="16" viewBox="0 0 16 16">
-                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                    </svg>
-                                </button>
+                                <div class="card-details">
+                                    <span class="card-number">•••• 3333</span>
+                                    <span class="card-expiry">Exp: 11/25</span>
+                                </div>
                             </div>
-                        </label>
+                            <button class="card-options-btn" onclick="showCardOptions(event)">
+                                <svg width="16" height="16" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </label>
                         <div class="cvv-input-wrapper" id="cvv-card-5">
                             <div class="cvv-input-container">
                                 <label for="cvv-input-5" class="cvv-label">
@@ -344,25 +344,25 @@
                     <div class="saved-card-wrapper hidden-card">
                         <label class="saved-card-item">
                             <input type="radio" name="payment-method" value="card-6" onchange="handleCardSelection()">
-                            <div class="card-content">
-                                <div class="card-info">
-                                    <div class="card-brand visa">
-                                        <img src="images/visa.png" alt="Visa" class="card-logo">
-                                    </div>
-                                    <div class="card-details">
-                                        <span class="card-number">•••• 7777</span>
-                                        <span class="card-expiry">Exp: 08/27</span>
-                                    </div>
+                        <div class="card-content">
+                            <div class="card-info">
+                                <div class="card-brand visa">
+                                    <img src="images/visa.png" alt="Visa" class="card-logo">
                                 </div>
-                                <button class="card-options-btn" onclick="showCardOptions(event)">
-                                    <svg width="16" height="16" viewBox="0 0 16 16">
-                                        <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
-                                        <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
-                                    </svg>
-                                </button>
+                                <div class="card-details">
+                                    <span class="card-number">•••• 7777</span>
+                                    <span class="card-expiry">Exp: 08/27</span>
+                                </div>
                             </div>
-                        </label>
+                            <button class="card-options-btn" onclick="showCardOptions(event)">
+                                <svg width="16" height="16" viewBox="0 0 16 16">
+                                    <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                                    <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </label>
                         <div class="cvv-input-wrapper" id="cvv-card-6">
                             <div class="cvv-input-container">
                                 <label for="cvv-input-6" class="cvv-label">
