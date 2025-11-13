@@ -441,10 +441,16 @@ function collapsePaymentList() {
 // Toggle new card form
 function toggleNewCardForm(cardType = 'credit') {
     const section = document.getElementById('newCardSection');
+    const addPaymentBtn = document.getElementById('addPaymentBtn');
     const isActive = section.classList.contains('active');
     
     if (isActive) {
         section.classList.remove('active');
+        
+        // Show Add Payment button again
+        if (addPaymentBtn) {
+            addPaymentBtn.style.display = '';
+        }
         
         // Show payment options again when closing the form
         const paymentSection = document.getElementById('addPaymentSection');
@@ -454,13 +460,17 @@ function toggleNewCardForm(cardType = 'credit') {
         
         // Scroll to payment options section
         setTimeout(() => {
-            const addPaymentBtn = document.querySelector('.add-payment-btn');
             if (addPaymentBtn) {
                 addPaymentBtn.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }, 100);
     } else {
         section.classList.add('active');
+        
+        // Hide Add Payment button when form is open
+        if (addPaymentBtn) {
+            addPaymentBtn.style.display = 'none';
+        }
         
         // Set the card type in hidden field
         const cardTypeInput = document.getElementById('cardType');
@@ -488,10 +498,16 @@ function toggleNewCardForm(cardType = 'credit') {
 // Toggle new bank account form
 function toggleNewBankForm() {
     const section = document.getElementById('newBankSection');
+    const addPaymentBtn = document.getElementById('addPaymentBtn');
     const isActive = section.classList.contains('active');
     
     if (isActive) {
         section.classList.remove('active');
+        
+        // Show Add Payment button again
+        if (addPaymentBtn) {
+            addPaymentBtn.style.display = '';
+        }
         
         // Show payment options again when closing the form
         const paymentSection = document.getElementById('addPaymentSection');
@@ -501,13 +517,17 @@ function toggleNewBankForm() {
         
         // Scroll to payment options section
         setTimeout(() => {
-            const addPaymentBtn = document.querySelector('.add-payment-btn');
             if (addPaymentBtn) {
                 addPaymentBtn.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         }, 100);
     } else {
         section.classList.add('active');
+        
+        // Hide Add Payment button when form is open
+        if (addPaymentBtn) {
+            addPaymentBtn.style.display = 'none';
+        }
         
         // Scroll to form
         setTimeout(() => {
