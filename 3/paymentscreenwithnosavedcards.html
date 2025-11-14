@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Secure Checkout</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Skip Link -->
+    <a href="#main-payment" class="skip-link">Skip to payment form</a>
+    
+    <!-- Live Region for Screen Reader Announcements -->
+    <div role="status" aria-live="polite" aria-atomic="true" class="sr-only" id="liveRegion"></div>
+    
+    <div class="container">
+        <div class="payment-wrapper">
+            <!-- Header -->
+            <header class="payment-header" role="banner">
+                <h1>Payment</h1>
+                <div class="security-badge">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <path d="M8 0L2 3V7C2 10.866 5.134 14 8 14C10.866 14 14 10.866 14 7V3L8 0Z" fill="#10B981"/>
+                        <path d="M6.5 8L7.5 9L10 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Secure Payment</span>
+                </div>
+            </header>
+
+            <!-- Order Summary (Collapsible on Mobile) -->
+            <div class="order-summary collapsed">
+                <button type="button" class="summary-header" onclick="toggleSummary()" aria-expanded="false" aria-controls="summary-details">
+                    <div class="summary-title">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M3 3H17V17H3V3Z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                            <path d="M7 8H13M7 12H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                        <span>Payment Details</span>
+                    </div>
+                    <div class="summary-amount">
+                        <span class="total-amount">$100.00 USD</span>
+                        <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                            <path d="M6 8L10 12L14 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </button>
+                <div class="summary-details" id="summary-details">
+                    <div class="summary-item">
+                        <span>Payee</span>
+                        <span>JOE DOE</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Payment Amount</span>
+                        <span>$100.00</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-item summary-total">
+                        <span>Total</span>
+                        <span>$100.00 USD</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Pay Options -->
+            <section class="quick-pay-section">
+                <h2 class="section-title">Express Checkout</h2>
+                <div class="quick-pay-buttons">
+                    <button type="button" class="quick-pay-btn apple-pay" onclick="handleApplePay()" aria-label="Pay with Apple Pay">
+                        <img src="images/apple-pay.png" alt="Apple Pay" class="payment-logo">
+                    </button>
+                    <button type="button" class="quick-pay-btn google-pay" onclick="handleGooglePay()" aria-label="Pay with Google Pay">
+                        <img src="images/Google_Pay_Logo.svg.png" alt="Google Pay" class="payment-logo">
+                    </button>
+                </div>
+                <div class="divider">
+                    <span>Or pay with another method</span>
+                </div>
+            </section>
+
+            <!-- Payment Method Selection -->
+            <main id="main-payment" role="main">
+            <section class="saved-cards-section">
+                <h2 class="section-title">Select Payment Method</h2>
+                
+                <div class="add-payment-section active" id="addPaymentSection">
+                    <div class="add-payment-options">
+                        <button type="button" class="add-payment-option" onclick="addPaymentMethod('credit')" aria-label="Add credit card">
+                            <div class="payment-option-icon card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M2 10H22" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M6 14H10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="payment-option-title">Credit Card</div>
+                        </button>
+                        
+                        <button type="button" class="add-payment-option" onclick="addPaymentMethod('debit')" aria-label="Add debit card">
+                            <div class="payment-option-icon card-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <rect x="2" y="6" width="20" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M2 10H22" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="8" cy="14" r="1.5" fill="currentColor"/>
+                                </svg>
+                            </div>
+                            <div class="payment-option-title">Debit Card</div>
+                        </button>
+                        
+                        <button type="button" class="add-payment-option" onclick="addPaymentMethod('bank')" aria-label="Add bank account">
+                            <div class="payment-option-icon bank-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M12 3L2 8V10H22V8L12 3Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                                    <path d="M5 10V18M10 10V18M14 10V18M19 10V18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                    <path d="M2 18H22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="payment-option-title">Bank Account</div>
+                        </button>
+                        
+                        <button type="button" class="add-payment-option" onclick="addPaymentMethod('link')" aria-label="Pay with Link">
+                            <div class="payment-option-icon link-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M10 13C10.4295 13.5741 10.9774 14.0492 11.6066 14.3929C12.2357 14.7367 12.9315 14.9411 13.6467 14.9923C14.3618 15.0435 15.0796 14.9403 15.7513 14.6897C16.4231 14.4392 17.0331 14.047 17.54 13.54L20.54 10.54C21.4508 9.59698 21.9548 8.33397 21.9434 7.02299C21.932 5.71201 21.4061 4.45794 20.4791 3.53091C19.5521 2.60388 18.298 2.07802 16.987 2.06663C15.676 2.05523 14.413 2.55921 13.47 3.47L11.75 5.18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M14 11C13.5705 10.4259 13.0226 9.95083 12.3934 9.60707C11.7643 9.26331 11.0685 9.05889 10.3533 9.00768C9.63819 8.95646 8.92037 9.05967 8.24861 9.31023C7.57685 9.56079 6.96689 9.95303 6.46 10.46L3.46 13.46C2.54921 14.403 2.04523 15.666 2.05662 16.977C2.06801 18.288 2.59388 19.5421 3.52091 20.4691C4.44794 21.3961 5.70201 21.922 7.01299 21.9334C8.32397 21.9448 9.58698 21.4408 10.53 20.53L12.24 18.82" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="payment-option-title">Link</div>
+                        </button>
+                        
+                        <button type="button" class="add-payment-option" onclick="addPaymentMethod('bancontact')" aria-label="Pay with Bancontact">
+                            <div class="payment-option-icon bancontact-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M2 10H22" stroke="currentColor" stroke-width="2"/>
+                                    <circle cx="6" cy="14.5" r="1" fill="currentColor"/>
+                                    <path d="M16 14H19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="payment-option-title">Bancontact</div>
+                        </button>
+                        
+                        <button type="button" class="add-payment-option" onclick="addPaymentMethod('sofort')" aria-label="Pay with Sofort">
+                            <div class="payment-option-icon sofort-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="payment-option-title">Sofort</div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- New Card Form (Initially Hidden) -->
+            <section class="new-card-section" id="newCardSection">
+                <div class="section-header">
+                    <h2 class="section-title" id="cardFormTitle">Add New Card</h2>
+                    <button type="button" class="close-btn" onclick="toggleNewCardForm()" aria-label="Close card form">
+                        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                            <path d="M5 5L15 15M5 15L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <form id="newCardForm" class="card-form">
+                    <!-- Hidden field to store card type -->
+                    <input type="hidden" id="cardType" name="cardType" value="credit">
+
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number *</label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="text" 
+                                id="cardNumber" 
+                                placeholder="1234 5678 9012 3456"
+                                maxlength="19"
+                                oninput="formatCardNumber(this)"
+                                autocomplete="cc-number"
+                                aria-required="true"
+                                required
+                            >
+                            <div class="card-type-icon" id="cardTypeIcon"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cardExpiry">Expiry Date *</label>
+                            <input 
+                                type="text" 
+                                id="cardExpiry" 
+                                placeholder="MM/YY"
+                                maxlength="5"
+                                oninput="formatExpiry(this)"
+                                autocomplete="cc-exp"
+                                aria-required="true"
+                                required
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="cardCvv">CVV *</label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="cardCvv" 
+                                    placeholder="123"
+                                    maxlength="4"
+                                    oninput="formatCVV(this)"
+                                    autocomplete="cc-csc"
+                                    aria-required="true"
+                                    required
+                                >
+                                <button type="button" class="info-btn" onclick="showCVVInfo()" aria-label="CVV information">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+                                        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        <path d="M8 7V12M8 5V5.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardName">Cardholder Name *</label>
+                        <input 
+                            type="text" 
+                            id="cardName" 
+                            placeholder="John Doe"
+                            value="JOHN DOE"
+                            oninput="this.value = this.value.toUpperCase()"
+                            autocomplete="cc-name"
+                            aria-required="true"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="billingAddress">Billing Address *</label>
+                        <input 
+                            type="text" 
+                            id="billingAddress" 
+                            placeholder="123 Main St, City, State, ZIP"
+                            value="123 Main Street, Anytown, CA 12345"
+                            autocomplete="street-address"
+                            aria-required="true"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="saveCard" checked>
+                            <span class="checkbox-custom"></span>
+                            <span>Save this card for future payments</span>
+                        </label>
+                    </div>
+                </form>
+            </section>
+
+            <!-- New Bank Account Form (Initially Hidden) -->
+            <section class="new-bank-section" id="newBankSection">
+                <div class="section-header">
+                    <h2 class="section-title" id="bankFormTitle">Add New Bank Account</h2>
+                    <button type="button" class="close-btn" onclick="toggleNewBankForm()" aria-label="Close bank account form">
+                        <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+                            <path d="M5 5L15 15M5 15L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <form id="newBankForm" class="card-form">
+                    <div class="form-group">
+                        <label for="accountHolderName">Account Holder Name *</label>
+                        <input 
+                            type="text" 
+                            id="accountHolderName" 
+                            placeholder="John Doe"
+                            autocomplete="name"
+                            aria-required="true"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="routingNumber">Routing Number *</label>
+                        <input 
+                            type="text" 
+                            id="routingNumber" 
+                            placeholder="110000000"
+                            maxlength="9"
+                            aria-required="true"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="accountNumber">Account Number *</label>
+                        <input 
+                            type="text" 
+                            id="accountNumber" 
+                            placeholder="000123456789"
+                            aria-required="true"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmAccountNumber">Confirm Account Number *</label>
+                        <input 
+                            type="text" 
+                            id="confirmAccountNumber" 
+                            placeholder="000123456789"
+                            aria-required="true"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="accountType">Account Type *</label>
+                        <select id="accountType" aria-required="true" required>
+                            <option value="">Select account type</option>
+                            <option value="checking">Checking</option>
+                            <option value="savings">Savings</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="saveBankAccount" checked>
+                            <span class="checkbox-custom"></span>
+                            <span>Save this account for future payments</span>
+                        </label>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Terms and Privacy Agreement -->
+            <div class="agreement-section">
+                <div class="agreement-checkbox">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="termsAgreement" required>
+                        <span class="checkbox-custom"></span>
+                        <span class="agreement-text">
+                            I have read and agree to the 
+                            <a href="#" onclick="showTerms(event)" class="agreement-link">Terms and Conditions</a> 
+                            and 
+                            <a href="#" onclick="showPrivacy(event)" class="agreement-link">Privacy Policy</a>
+                        </span>
+                    </label>
+                </div>
+                
+                <div class="recaptcha-notice">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" class="recaptcha-icon" aria-hidden="true">
+                        <path d="M7 0C3.13 0 0 3.13 0 7s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm0 12.5c-3.03 0-5.5-2.47-5.5-5.5S3.97 1.5 7 1.5s5.5 2.47 5.5 5.5-2.47 5.5-5.5 5.5z" fill="#9CA3AF"/>
+                        <path d="M6.5 4h1v4h-1V4zm0 5h1v1h-1V9z" fill="#9CA3AF"/>
+                    </svg>
+                    <p>
+                        This site is protected by reCAPTCHA and the Google
+                        <a href="https://policies.google.com/privacy" target="_blank" class="recaptcha-link">Privacy Policy</a>
+                        and
+                        <a href="https://policies.google.com/terms" target="_blank" class="recaptcha-link">Terms of Service</a>
+                        apply.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button type="button" class="btn-secondary" onclick="goBack()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="processPayment()">
+                    <span>Pay $100.00</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                        <path d="M5 10H15M15 10L11 6M15 10L11 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Processing your payment...</p>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content success">
+            <div class="success-icon">
+                <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true">
+                    <circle cx="32" cy="32" r="32" fill="#10B981"/>
+                    <path d="M20 32L28 40L44 24" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h2>Payment Successful!</h2>
+            <p>Your payment of $100.00 has been processed successfully.</p>
+            <button type="button" class="btn-primary" onclick="closeSuccessModal()">Done</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
